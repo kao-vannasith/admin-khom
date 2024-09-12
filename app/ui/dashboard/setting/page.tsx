@@ -140,61 +140,7 @@ export default function Example() {
                                         <DialogTitle as="h3" className="text-base font-semibold leading-6 text-gray-900">
                                             Create account
                                         </DialogTitle>
-                                        <div>
-                                            <label htmlFor="price" className="block text-sm font-medium leading-6 text-gray-900">
-                                                Name
-                                            </label>
-                                            <div className="relative mt-2 rounded-md shadow-sm">
-                                                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                                    <span className="text-gray-500 sm:text-sm">ชื่อ</span>
-                                                </div>
-                                                <input
-                                                    id="name"
-                                                    name="name"
-                                                    type="text"
-                                                    placeholder=""
-                                                    className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                                />
-                                                <div className="absolute inset-y-0 right-0 flex items-center">
-                                                    <label htmlFor="currency" className="sr-only">
-                                                        Currency
-                                                    </label>
-                                                    <select
-                                                        id="currency"
-                                                        name="currency"
-                                                        className="h-full rounded-md border-0 bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
-                                                    >
-                                                        <option>admin</option>
-                                                        <option>ตัวแทน</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div className="relative mt-2 rounded-md shadow-sm">
-                                                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-1">
-                                                    <span className="text-gray-500 sm:text-sm">โทร</span>
-                                                </div>
-                                                <input
-                                                    id="name"
-                                                    name="name"
-                                                    type="text"
-                                                    placeholder=""
-                                                    className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                                />
-                                                <div className="absolute inset-y-0 right-0 flex items-center">
-                                                    <label htmlFor="currency" className="sr-only">
-                                                        Currency
-                                                    </label>
-                                                    <select
-                                                        id="currency"
-                                                        name="currency"
-                                                        className="h-full rounded-md border-0 bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
-                                                    >
-                                                        <option>030</option>
-                                                        <option>020</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
+                                      
                                         <div>
                                             <div className="flex items-center justify-between">
                                                 <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
@@ -231,7 +177,7 @@ export default function Example() {
                                                 >
                                                     {peoples.map((person) => (
                                                         <ListboxOption
-                                                            key={person.id}
+                                                            key={person.name}
                                                             value={person}
                                                             className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-indigo-600 data-[focus]:text-white"
                                                         >
