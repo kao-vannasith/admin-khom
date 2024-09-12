@@ -5,7 +5,48 @@ const users = [
     id: '410544b2-4001-4271-9855-fec4b6a6442a',
     name: 'User',
     email: 'user@nextmail.com',
+    phone: 2055731818,
     password: '123456',
+    role: 'supperAdmin'
+  },
+];
+
+const companys = [
+  {
+    id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81a5',
+    name: 'A',
+    image_url: '/customers/evil-rabbit.png'
+  },
+  {
+    id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81a7',
+    name: 'B',
+    image_url: '/customers/evil-rabbit.png'
+  },
+  {
+    id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81a2',
+    name: 'C',
+    image_url: '/customers/evil-rabbit.png'
+  },
+];
+
+const storages = [
+  {
+    company_id: companys[2].id,
+    name: 'อาหาร',
+    image_url: '/customers/evil-rabbit.png',
+    count: 20
+  },
+  {
+    company_id: companys[2].id,
+    name: 'คีม',
+    image_url: '/customers/evil-rabbit.png',
+    count: 20
+  },
+  {
+    company_id: companys[0].id,
+    name: 'น้ำ',
+    image_url: '/customers/evil-rabbit.png',
+    count: 20
   },
 ];
 
@@ -13,7 +54,7 @@ const customers = [
   {
     id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
     name: 'Evil Rabbit',
-    email: 'evil@rabbit.com',
+    email: '12345678',
     image_url: '/customers/evil-rabbit.png',
   },
   {
@@ -144,4 +185,4 @@ const revenue = [
   { month: 'Dec', revenue: 4800 },
 ];
 
-export { users, customers, invoices, revenue };
+export { users, customers, invoices, revenue, companys, storages };

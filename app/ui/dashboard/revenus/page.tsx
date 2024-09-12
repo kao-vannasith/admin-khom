@@ -23,7 +23,7 @@ export default async function RevenueChart() { // Make component async, remove t
   return (
     <div className="w-full md:col-span-4">
       <h2 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
-        ข้อมูลลายรับ
+      ข้อมูลลายรับ
       </h2>
       {/* NOTE: Uncomment this code in Chapter 7 */}
 

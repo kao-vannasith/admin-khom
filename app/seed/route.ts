@@ -1,16 +1,20 @@
 import bcrypt from 'bcrypt';
 import { db } from '@vercel/postgres';
-import { invoices, customers, revenue, users } from '../lib/placeholder-data';
+import { invoices, customers, revenue, users, companys, storages } from '../lib/placeholder-data';
 
 const client = await db.connect();
 
 async function seedUsers() {
+  // await client.sql`
+  // DROP TABLE users`
   await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
   await client.sql`
     CREATE TABLE IF NOT EXISTS users (
       id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
       name VARCHAR(255) NOT NULL,
       email TEXT NOT NULL UNIQUE,
+      role VARCHAR(255) NOT NULL,
+      phone INT NOT NULL,
       password TEXT NOT NULL
     );
   `;
@@ -19,8 +23,8 @@ async function seedUsers() {
     users.map(async (user) => {
       const hashedPassword = await bcrypt.hash(user.password, 10);
       return client.sql`
-        INSERT INTO users (id, name, email, password)
-        VALUES (${user.id}, ${user.name}, ${user.email}, ${hashedPassword})
+        INSERT INTO users (id, name, email, role, phone, password)
+        VALUES (${user.id}, ${user.name}, ${user.email}, ${user.role}, ${user.phone}, ${hashedPassword})
         ON CONFLICT (id) DO NOTHING;
       `;
     }),
@@ -55,6 +59,35 @@ async function seedInvoices() {
   return insertedInvoices;
 }
 
+async function seedStorages() {
+  // await client.sql`
+  // DROP TABLE storages`
+
+  await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+
+  await client.sql`
+    CREATE TABLE IF NOT EXISTS storages (
+      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+      company_id UUID NOT NULL,
+      count INT NOT NULL,
+      name VARCHAR(255) NOT NULL,
+      image_url VARCHAR(255) NOT NULL
+    );
+  `;
+
+  const insertedStorage = await Promise.all(
+    storages.map(
+      (stor) => client.sql`
+        INSERT INTO storages (company_id, count, name, image_url)
+        VALUES (${stor.company_id}, ${stor.count}, ${stor.name}, ${stor.image_url})
+        ON CONFLICT (id) DO NOTHING;
+      `,
+    ),
+  );
+
+ return insertedStorage;
+}
+
 async function seedCustomers() {
   await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
@@ -78,6 +111,30 @@ async function seedCustomers() {
   );
 
   return insertedCustomers;
+}
+
+async function seedCompanys() {
+  await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+
+  await client.sql`
+    CREATE TABLE IF NOT EXISTS companys (
+      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      image_url VARCHAR(255) NOT NULL
+    );
+  `;
+
+  const insertedCompanys = await Promise.all(
+    companys.map(
+      (company) => client.sql`
+        INSERT INTO companys (id, name, image_url)
+        VALUES (${company.id}, ${company.name}, ${company.image_url})
+        ON CONFLICT (id) DO NOTHING;
+      `,
+    ),
+  );
+
+  return insertedCompanys;
 }
 
 async function seedRevenue() {
@@ -108,6 +165,8 @@ export async function GET() {
     await seedCustomers();
     await seedInvoices();
     await seedRevenue();
+    await seedCompanys();
+    await seedStorages();
     await client.sql`COMMIT`;
 
     return Response.json({ message: 'Database seeded successfully' });

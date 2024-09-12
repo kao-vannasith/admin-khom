@@ -6,7 +6,22 @@ export type User = {
   id: string;
   name: string;
   email: string;
+  phone: number;
   password: string;
+  role: string;
+};
+export type Company = {
+  id: string;
+  name: string;
+  image_url: string;
+};
+
+export type Storage = {
+  id: string;
+  name: string;
+  count: number;
+  image_url: string;
+  company_id: string;
 };
 
 export type Customer = {
@@ -53,6 +68,14 @@ export type InvoicesTable = {
   date: string;
   amount: number;
   status: 'pending' | 'paid';
+};
+
+export type StorageTable = {
+  id: string;
+  company_id: string;
+  name: string;
+  count: string;
+  image_url: string;
 };
 
 export type CustomersTableType = {

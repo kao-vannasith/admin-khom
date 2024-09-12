@@ -4,6 +4,7 @@ const {
   customers,
   revenue,
   users,
+  companys,
 } = require('../app/lib/placeholder-data.js');
 const bcrypt = require('bcrypt');
 
@@ -125,6 +126,44 @@ async function seedCustomers(client) {
   }
 }
 
+async function seedCompanys(client) {
+  try {
+    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+
+    
+    const createTable = await client.sql`
+      CREATE TABLE IF NOT EXISTS companys (
+        id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        image_url VARCHAR(255) NOT NULL
+      );
+    `;
+
+    console.log(`Created "companys" table`);
+
+    // Insert data into the "companys" table
+    const insertedCompanys = await Promise.all(
+      companys.map(
+        (company) => client.sql`
+        INSERT INTO companys (id, name, image_url)
+        VALUES (${company.id}, ${company.name}, ${company.image_url})
+        ON CONFLICT (id) DO NOTHING;
+      `,
+      ),
+    );
+
+    console.log(`Seeded ${insertedCompanys.length} companys`);
+
+    return {
+      createTable,
+      customers: insertedCompanys,
+    };
+  } catch (error) {
+    console.error('Error seeding companys:', error);
+    throw error;
+  }
+}
+
 async function seedRevenue(client) {
   try {
     // Create the "revenue" table if it doesn't exist
@@ -167,7 +206,8 @@ async function main() {
   await seedCustomers(client);
   await seedInvoices(client);
   await seedRevenue(client);
-
+  await seedCompanys(client);
+  
   await client.end();
 }
 

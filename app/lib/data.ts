@@ -6,6 +6,8 @@ import {
   InvoicesTable,
   LatestInvoiceRaw,
   Revenue,
+  Company,
+  StorageTable
 } from './definitions';
 import { formatCurrency } from './utils';
 
@@ -119,6 +121,34 @@ export async function fetchFilteredInvoices(
   }
 }
 
+export async function fetchFilteredStorages(
+  query: string,
+  currentPage: number,
+) {
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  try {
+    const invoices = await sql<StorageTable>`
+      SELECT
+        storages.id,
+        storages.count,
+        companys.name,
+        companys.image_url
+      FROM storages
+      JOIN companys ON storages.company_id = companys.id
+      WHERE
+        storages.name ILIKE ${`%${query}%`} OR
+        companys.name ILIKE ${`%${query}%`} 
+      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    `;
+
+    return invoices.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch invoices.');
+  }
+}
+
 export async function fetchInvoicesPages(query: string) {
   try {
     const count = await sql`SELECT COUNT(*)
@@ -137,6 +167,25 @@ export async function fetchInvoicesPages(query: string) {
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch total number of invoices.');
+  }
+}
+
+export async function fetchStoragesPages(query: string) {
+  try {
+    const count = await sql`SELECT COUNT(*)
+    FROM storages
+    JOIN companys ON storages.company_id = companys.id
+    WHERE
+      companys.name ILIKE ${`%${query}%`} OR
+      storages.count::text ILIKE ${`%${query}%`} OR
+      storages.name::text ILIKE ${`%${query}%`}
+  `;
+
+    const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+    return totalPages;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of storages.');
   }
 }
 
@@ -180,6 +229,22 @@ export async function fetchCustomers() {
   } catch (err) {
     console.error('Database Error:', err);
     throw new Error('Failed to fetch all customers.');
+  }
+}
+
+export async function fetchCompanys() {
+  try {
+   
+     await new Promise((resolve) => setTimeout(resolve, 3000));
+
+    const data = await sql<Company>`SELECT * FROM companys`;
+
+     console.log('Data fetch completed after 3 seconds.');
+
+    return data.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch company data.');
   }
 }
 
