@@ -148,7 +148,7 @@ export default function Example() {
                                                 </label>
                                             </div>
                                             <div className="mt-2">
-                                                <inputw
+                                                <input
                                                     id="password"
                                                     name="password"
                                                     type="password"
