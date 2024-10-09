@@ -46,7 +46,7 @@ export default async function CustomersTable({
                           </div>
                         </div>
                         <p className="text-sm text-gray-500">
-                          {customer.email}
+                          {customer.phone}
                         </p>
                       </div>
                     </div>
@@ -103,7 +103,7 @@ export default async function CustomersTable({
                         </div>
                       </td>
                       <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
-                        {customer.email}
+                        {customer.phone}
                       </td>
                       <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
                         {customer.total_invoices}

@@ -27,7 +27,7 @@ export type Storage = {
 export type Customer = {
   id: string;
   name: string;
-  email: string;
+  phone: string;
   image_url: string;
 };
 
@@ -81,7 +81,7 @@ export type StorageTable = {
 export type CustomersTableType = {
   id: string;
   name: string;
-  email: string;
+  phone: string;
   image_url: string;
   total_invoices: number;
   total_pending: number;
@@ -91,7 +91,7 @@ export type CustomersTableType = {
 export type FormattedCustomersTable = {
   id: string;
   name: string;
-  email: string;
+  phone: string;
   image_url: string;
   total_invoices: number;
   total_pending: string;

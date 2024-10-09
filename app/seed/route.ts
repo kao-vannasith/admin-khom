@@ -89,13 +89,16 @@ async function seedStorages() {
 }
 
 async function seedCustomers() {
+  await client.sql`
+  DROP TABLE customers`
+
   await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
   await client.sql`
     CREATE TABLE IF NOT EXISTS customers (
       id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
       name VARCHAR(255) NOT NULL,
-      email VARCHAR(255) NOT NULL,
+      phone VARCHAR(255) NOT NULL,
       image_url VARCHAR(255) NOT NULL
     );
   `;
@@ -103,8 +106,8 @@ async function seedCustomers() {
   const insertedCustomers = await Promise.all(
     customers.map(
       (customer) => client.sql`
-        INSERT INTO customers (id, name, email, image_url)
-        VALUES (${customer.id}, ${customer.name}, ${customer.email}, ${customer.image_url})
+        INSERT INTO customers (id, name, phone, image_url)
+        VALUES (${customer.id}, ${customer.name}, ${customer.phone}, ${customer.image_url})
         ON CONFLICT (id) DO NOTHING;
       `,
     ),
@@ -114,6 +117,9 @@ async function seedCustomers() {
 }
 
 async function seedCompanys() {
+  await client.sql`
+  DROP TABLE companys`
+
   await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
   await client.sql`
