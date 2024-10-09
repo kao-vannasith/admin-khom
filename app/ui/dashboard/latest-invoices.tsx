@@ -38,7 +38,7 @@ export default async function LatestInvoices() { // Remove props
                       {invoice.name}
                     </p>
                     <p className="hidden text-sm text-gray-500 sm:block">
-                      {invoice.email}
+                      {invoice.phone}
                     </p>
                   </div>
                 </div>
