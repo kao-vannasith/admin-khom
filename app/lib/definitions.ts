@@ -50,7 +50,7 @@ export type LatestInvoice = {
   id: string;
   name: string;
   image_url: string;
-  email: string;
+  phone: string;
   amount: string;
 };
 
@@ -63,7 +63,7 @@ export type InvoicesTable = {
   id: string;
   customer_id: string;
   name: string;
-  email: string;
+  phone: string;
   image_url: string;
   date: string;
   amount: number;
